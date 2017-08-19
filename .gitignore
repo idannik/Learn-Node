@@ -5,3 +5,8 @@ node_modules/
 haters/
 variables.env
 variables.env.now
+.vscode/launch.json
+starter-files/public/dist/App.bundle.js
+starter-files/public/dist/App.bundle.js.map
+starter-files/public/dist/style.css
+starter-files/public/dist/style.css.map
