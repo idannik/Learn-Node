@@ -33,12 +33,18 @@ location: {
 photo: String
 });
 
-storeSchema.pre('save', function(next) {
+storeSchema.pre('save', async function(next) {
     if (!this.isModified('name')) {
         next()
         return;
     }
     this.slug = slug(this.name)
+    // find other store with the same slug
+    const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*)?)$`, 'i')
+    const storeWithSlug = await this.constructor.find({slug: slugRegEx});
+    if (storeWithSlug) {
+        this.slug = `${this.slug}-${storeWithSlug.length + 1}`;
+    }
     next()
 })
 
