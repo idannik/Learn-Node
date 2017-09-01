@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Store = mongoose.model('Store');
-const multer = require('multer'); // TODO read about multer
+const multer = require('multer'); // TODO   read about multer
 const jimp = require('jimp'); // TODO read about jimp
 const uuid = require('uuid'); //TODO read about uuid
 
@@ -67,8 +67,20 @@ exports.updateStore = async (req, res) => {
   req.body.location.type = 'Point';
   const store = await Store.findOneAndUpdate({_id: req.params.id}, req.body, {
     new:true, //return the new store instead of the old one 
-    runValidators: true 
+    runValidators: true   
   }).exec();  
   req.flash('success', `Succesfully updated <strong> ${store.name} </strong> <a href="/stores/${store.slug}">View store</a>`);
   res.redirect(`/stores/${store._id}/edit`);
+}
+
+exports.getStoreBySlug = async (req, res, next) => {
+  const store = await Store.findOne({ slug: req.params.slug});
+  // we need to check if the store was found
+  if (!store) {
+    next();
+    return;
+  } else {
+    res.render("store", {store})    
+  }
+  
 }
