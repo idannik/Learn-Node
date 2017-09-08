@@ -24,6 +24,7 @@ router.get("/login", userController.loginForm);
 router.get("/register", userController.registerForm);
 router.get('/logout', authController.logout)
 
+router.get('/account', userController.account)
 
 //post/update
 
@@ -44,4 +45,8 @@ router.post('/add/:id',
     catchErrors(storeController.updateStore));
 
 router.post('/login', authController.login)    
+
+router.post('/account', authController.isLoggedIn,
+                        catchErrors(userController.updateAccount))
+
 module.exports = router;

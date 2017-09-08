@@ -23,7 +23,7 @@ location: {
     },
     coordinates: [{
         type: Number,
-        required: "You mus supply coordinates!"
+        required: "You must supply coordinates!"
     }],
     address: {
         type: String,
